@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f6f1eb" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icon.svg" />
+  <link rel="stylesheet" href="/styles.css?v=9" />
+  <title>BABY NOTE</title>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand-lockup"><span class="brand-dot">✦</span><span class="brand-name">BABY NOTE</span></div>
+      <div class="top-actions"><button id="phone-login-btn" class="login-btn" type="button">手机号登录</button><span id="role-pill" class="role-pill">主账号</span><button id="settings-btn" class="icon-btn" aria-label="设置">⚙︎</button></div>
+    </header>
+
+    <section class="day-card" aria-labelledby="baby-name">
+      <div class="day-card-head"><p class="eyebrow" id="today-label">今天的照护节奏</p><span class="sync-state"><span id="sync-dot" class="sync-dot"></span><span id="sync-label">正在连接</span></span></div>
+      <div class="day-card-body"><div><h1 id="baby-name">小宝</h1><strong id="today-count">从第一条记录开始</strong><span id="live-clock" class="sr-only" aria-hidden="true">--:--</span></div><div class="day-mark" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div></div>
+      <p class="day-note">每一次照护，都会变成今天的一点安心。</p>
+    </section>
+
+    <section class="daily-report" aria-labelledby="daily-report-title">
+      <div class="report-head">
+        <div><p class="eyebrow">TODAY IN A GLANCE</p><h2 id="daily-report-title">今日日报</h2><p class="report-sub">看见今天的照护节奏，下一步更容易决定。</p></div>
+        <span id="report-caption" class="report-caption">仅显示今天</span>
+      </div>
+      <div class="report-main">
+        <div class="report-total"><span>今天共记录</span><strong id="report-total">0</strong><em>次照护</em><div class="report-pulse" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="report-breakdown">
+          <div class="report-row feed" data-report-key="feed"><span class="report-icon">◌</span><span class="report-label">喝奶</span><span class="report-rule"><i></i></span><strong id="report-feed">0</strong><small>次</small></div>
+          <div class="report-row diaper" data-report-key="diaper"><span class="report-icon">⌁</span><span class="report-label">换尿布</span><span class="report-rule"><i></i></span><strong id="report-diaper">0</strong><small>次</small></div>
+          <div class="report-row ad" data-report-key="ad"><span class="report-icon">✦</span><span class="report-label">吃 AD</span><span class="report-rule"><i></i></span><strong id="report-ad">0</strong><small>次</small></div>
+          <div class="report-row care" data-report-key="care"><span class="report-icon">＋</span><span class="report-label">其他照护</span><span class="report-rule"><i></i></span><strong id="report-care">0</strong><small>次</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quick-section" aria-labelledby="quick-title"><div class="section-heading"><div><p class="eyebrow">QUICK LOG</p><h2 id="quick-title">记录一个动作</h2></div><span class="hint">轻触即可记录<br>时间会自动留下</span></div><div id="quick-actions" class="quick-actions"></div></section>
+
+    <section class="timeline-section" aria-labelledby="timeline-title"><div class="section-heading"><div><p class="eyebrow">THE DAY SO FAR</p><h2 id="timeline-title">最近记录</h2></div><button id="add-record-btn" class="text-btn">＋ 补记</button></div><div id="timeline" class="timeline"></div></section>
+    <footer><span>本机已保存 · 自动同步中</span><button id="sync-now" class="text-btn">立即同步</button></footer>
+  </main>
+
+  <dialog id="record-dialog"><form method="dialog" id="record-form"><div class="dialog-head"><div><p class="eyebrow">EDIT RECORD</p><h3 id="record-dialog-title">记录</h3></div><button value="cancel" class="close-btn">×</button></div><input type="hidden" id="edit-id" /><label>动作<select id="edit-action"></select></label><label>时间<input id="edit-at" type="datetime-local" required /></label><label id="amount-field">奶量（ml，可留空）<input id="edit-amount" inputmode="numeric" type="number" min="0" step="5" placeholder="例如 90" /></label><label>备注<textarea id="edit-note" rows="3" placeholder="可选"></textarea></label><div class="dialog-actions"><button type="button" id="delete-record" class="danger-btn">删除</button><button type="submit" value="save" class="primary-btn">保存</button></div></form></dialog>
+  <dialog id="custom-dialog"><form method="dialog" id="custom-form"><div class="dialog-head"><div><p class="eyebrow">CUSTOM ACTION</p><h3>添加自定义动作</h3></div><button value="cancel" class="close-btn">×</button></div><label>名称<input id="custom-label" required maxlength="8" placeholder="例如 洗澡" /></label><label>图标<input id="custom-icon" maxlength="2" value="🫧" /></label><div class="dialog-actions"><span></span><button type="submit" value="save" class="primary-btn">添加动作</button></div></form></dialog>
+  <dialog id="settings-dialog"><form method="dialog"><div class="dialog-head"><div><p class="eyebrow">SETTINGS</p><h3>BABY NOTE</h3></div><button value="cancel" class="close-btn">×</button></div><div class="settings-list"><button type="button" id="edit-baby-btn" class="settings-row"><span>修改宝宝名字</span><span>›</span></button><button type="button" id="share-btn" class="settings-row"><span>分享访问链接</span><span>›</span></button><button type="button" id="export-btn" class="settings-row"><span>下载云端全部数据</span><span>›</span></button><button type="button" id="add-custom-btn" class="settings-row"><span>管理自定义动作</span><span>›</span></button></div><p class="small-note">对方打开链接后，用自己的手机号登录即可绑定权限。编辑权限可以新增、修改和删除；阅读权限只能浏览。</p></form></dialog>
+  <dialog id="baby-dialog"><form method="dialog" id="baby-form"><div class="dialog-head"><div><p class="eyebrow">BABY NOTE</p><h3>宝宝信息</h3></div><button value="cancel" class="close-btn">×</button></div><label>宝宝名字<input id="baby-name-input" required maxlength="24" placeholder="例如 小满" /></label><div class="dialog-actions"><span></span><button type="submit" value="save" class="primary-btn">保存名字</button></div></form></dialog>
+  <dialog id="share-dialog"><form method="dialog"><div class="dialog-head"><div><p class="eyebrow">SHARE BABY NOTE</p><h3>分享访问链接</h3></div><button value="cancel" class="close-btn">×</button></div><div class="share-link-row"><div><strong>编辑链接</strong><small>可以新增、修改和删除记录</small><code id="edit-share-link">生成中…</code></div><button type="button" class="primary-btn copy-share" data-target="edit-share-link">复制</button></div><div class="share-link-row"><div><strong>阅读链接</strong><small>只能浏览，不能修改</small><code id="view-share-link">生成中…</code></div><button type="button" class="secondary-btn copy-share" data-target="view-share-link">复制</button></div><p class="small-note">链接被手机号账号领取后，权限会绑定到该账号；所有改动都会同步到同一份云端记录。</p></form></dialog>
+  <dialog id="phone-login-dialog"><form method="dialog" id="phone-login-form"><div class="dialog-head"><div><p class="eyebrow">BABY NOTE ACCOUNT</p><h3>手机号登录</h3></div><button value="cancel" class="close-btn" type="button" id="phone-login-close">×</button></div><p class="login-intro">用手机号接收一次性验证码，首次登录会自动创建账号。</p><label>手机号<input id="phone-input" type="tel" inputmode="numeric" autocomplete="tel" maxlength="11" placeholder="请输入 11 位手机号" required /></label><div class="code-field"><label>短信验证码<input id="phone-code-input" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="请输入验证码" required /></label><button id="send-code-btn" class="secondary-btn" type="button">获取验证码</button></div><p id="phone-login-hint" class="login-hint" aria-live="polite"></p><div class="dialog-actions login-actions"><span></span><button id="phone-submit-btn" type="submit" value="login" class="primary-btn">登录 / 注册</button></div></form></dialog>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="/site-config.js?v=1"></script>
+  <script src="/app.js?v=10" type="module"></script>
+</body>
+</html>
