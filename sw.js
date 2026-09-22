@@ -1,5 +1,5 @@
-const CACHE = 'newborn-record-v11';
-const ASSETS = ['/', '/index.html', '/styles.css?v=10', '/app.js?v=11', '/site-config.js?v=1', '/manifest.json', '/icon.svg'];
+const CACHE = 'newborn-record-v12';
+const ASSETS = ['/', '/index.html', '/styles.css?v=10', '/app.js?v=12', '/site-config.js?v=1', '/manifest.json', '/icon.svg'];
 self.addEventListener('install', event => event.waitUntil(
   caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())
 ));
