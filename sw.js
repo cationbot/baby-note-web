@@ -1,1 +1,23 @@
-const CACHE='newborn-record-v10'; const ASSETS=['/','/index.html','/styles.css?v=10','/app.js?v=10','/manifest.json','/icon.svg']; self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)))); self.addEventListener('fetch',e=>{if(e.request.url.includes('/api/')) return; e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(x=>{const copy=x.clone();caches.open(CACHE).then(c=>c.put(e.request,copy));return x})));});
+const CACHE = 'newborn-record-v11';
+const ASSETS = ['/', '/index.html', '/styles.css?v=10', '/app.js?v=11', '/site-config.js?v=1', '/manifest.json', '/icon.svg'];
+self.addEventListener('install', event => event.waitUntil(
+  caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())
+));
+self.addEventListener('activate', event => event.waitUntil(
+  caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith('newborn-record-') && key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())
+));
+self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+  if (event.request.method !== 'GET' || url.origin !== self.location.origin || url.pathname.startsWith('/api/')) return;
+  event.respondWith(fetch(event.request).then(response => {
+    if (response.ok) {
+      const copy = response.clone();
+      event.waitUntil(caches.open(CACHE).then(cache => cache.put(event.request, copy)));
+    }
+    return response;
+  }).catch(async () => {
+    const cached = await caches.match(event.request);
+    if (cached) return cached;
+    throw new Error('当前离线且没有缓存');
+  }));
+});
