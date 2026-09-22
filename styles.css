@@ -154,6 +154,8 @@ dialog form { padding: 22px; }
 .close-btn { background: #edf1ee; font-size: 23px; }
 label { display: block; margin: 14px 0; color: #637572; font-size: 12px; }
 input, textarea, select { width: 100%; margin-top: 7px; padding: 12px 13px; border: 1px solid #dfe8e4; border-radius: 13px; background: white; color: var(--ink); outline: none; }
+#record-dialog label { min-width: 0; }
+#record-dialog input[type="datetime-local"] { display: block; min-width: 0; max-width: 100%; }
 input:focus, textarea:focus, select:focus { border-color: #83aaa0; box-shadow: 0 0 0 3px rgba(56,107,104,.12); }
 .dialog-actions { margin-top: 23px; }
 .primary-btn, .danger-btn, .secondary-btn { padding: 11px 16px; border-radius: 13px; font-weight: 750; }
